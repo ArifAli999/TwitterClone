@@ -5,7 +5,7 @@ import UserPopOver from './UserPopOver'
 
 function Header({ session, userInfo, setUserInfo }) {
     return (
-        <div className='bg-black/80 flex justify-between items-center  text-white drop-shadow-md border-b border-bordergray shadow-md shadow-black/40'>
+        <div className='bg-black flex justify-between items-center border-b border-bordergray text-white shadow-md shadow-black/70'>
 
             {!session ? (
                 <div className=' w-full flex flex-row items-center  justify-between gap- '>

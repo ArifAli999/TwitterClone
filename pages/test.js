@@ -1,7 +1,11 @@
 import React, {useState, Fragment} from 'react'
 import {AiFillCaretRight, AiOutlineUser, AiOutlineHeart, AiOutlineCopy, AiOutlineSetting, AiOutlineLogout } from 'react-icons/ai'
 import { usePopper } from 'react-popper';
-import {  Transition, Popover } from '@headlessui/react'
+import { Dialog, Transition, Popover } from '@headlessui/react'
+import SubmitPost from '../components/post';
+import UserFeed from '../components/Feed';
+
+import { supabase } from '../util/supabaseClient'
 
 function UserPopOver({ setUserInfo}) {
 
@@ -18,6 +22,7 @@ function UserPopOver({ setUserInfo}) {
 
 
   return (
+    <div>
     <Popover className="relative  w-full text-right p-1">
     {({ open }) => (
         <>
@@ -45,8 +50,8 @@ function UserPopOver({ setUserInfo}) {
                 <Popover.Panel className="absolute right-0 w-full md:right-2 z-99 mt-6  min-w-lg md:w-fit transform px-4 sm:px-0 ">
                     <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
 
-                        <div className="bg-lightblack border border-bordergray shadow-lg shadow-black drop-shadow-lg flex flex-col w-full ">
-                            <div className=' border-b border-bordergray p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
+                        <div className="bg-black/90  flex flex-col w-full ">
+                            <div className=' border-b border-gray-300/30 p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
                                 <div className='ml-2'>
                                     <AiOutlineCopy size={25} className='group-hover:text-lime-300  text-green-400 duration-300 transition-all ease-linear' />
                                 </div>
@@ -71,7 +76,7 @@ function UserPopOver({ setUserInfo}) {
 
                             </div>
 
-                            <div className=' border-b border-bordergray p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
+                            <div className=' border-b border-gray-300/30 p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
                                 <div className='ml-2'>
                                     <AiOutlineHeart size={25} className='group-hover:text-red-500 text-pink-400 duration-300 transition-all ease-linear' />
                                 </div>
@@ -96,7 +101,7 @@ function UserPopOver({ setUserInfo}) {
 
                             </div>
 
-                            <div className=' border-b border-bordergray p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
+                            <div className=' border-b border-gray-300/30 p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
                                 <div className='ml-2'>
                                     <AiOutlineSetting size={25} className='group-hover:text-orange-400 text-indigo-100 duration-300 transition-all ease-linear' />
                                 </div>
@@ -122,7 +127,7 @@ function UserPopOver({ setUserInfo}) {
                             </div>
 
                             <div onClick={() => handleSignOut()}
-                            className=' border-b border-bordergray p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
+                            className=' border-b border-gray-300/30 p-2.5 flex w-full items-center gap-4 justify-center group transition duration-150 ease-in-out hover:bg-black'>
                                 <div className='ml-2'>
                                     <AiOutlineLogout size={25} className='group-hover:text-sky-900 duration-300 transition-all ease-linear text-violet-500' />
                                 </div>
@@ -157,7 +162,45 @@ function UserPopOver({ setUserInfo}) {
         </>
     )}
 </Popover>
+
+<div className=' h-full  w-full z-30'>
+          <div className='flex  w-full h-full gap-0 p-0'>
+            <div className='text-white   border-r border-bordergray h-full w-1/4  sticky'>
+            <div className='mt-10  w-full'>
+              Sidebar
+              </div>
+            
+              
+            </div>
+
+            <div className=' p-0 flex-1 overflow-scroll'>
+              <div className='mt-4 md:p-4 mb-10'>
+              <SubmitPost />
+              </div>
+
+              <div className='mt-10  w-full '>
+              <UserFeed/>
+              <br/>
+             
+              </div>
+            </div>
+
+            <div className='text-white  border-l border-bordergray h-full w-1/4 -z-50 '>
+              <div className='mt-10  w-full'>
+               jkfdskjfksdfk
+              </div>
+            </div>
+
+            
+
+          
+          </div>
+        
+</div>
+</div>
+
+
   )
 }
 
-export default UserPopOver
+export default UserPopOver;

@@ -57,13 +57,13 @@ export default function Home() {
 
 
   return (
-    <div className="w-full h-full overflow">
+    <div className="w-full h-full ">
      <Header session={session} setUserInfo={setUserInfo} userInfo={userInfo} className='z-50'/>
 
       {!session ? <Auth /> :
         (
         
-         <div className=' h-full  w-full '>
+         <div className=' h-full  w-full z-30'>
           <div className='flex  w-full h-full gap-0 p-0'>
             <div className='text-white   border-r border-bordergray h-full w-1/4  sticky'>
             <div className='mt-10  w-full'>
@@ -85,7 +85,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className='text-white  border-l border-bordergray h-full w-1/4 -z-50 sticky'>
+            <div className='text-white  border-l border-bordergray h-full w-1/4 -z-50 '>
               <div className='mt-10  w-full'>
                jkfdskjfksdfk
               </div>
