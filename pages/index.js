@@ -40,7 +40,7 @@ export default function Home() {
 
 
   return (
-    <div className="w-full h-full ">
+    <div className="w-full  ">
 
 
       {!session ? <Auth /> :
@@ -51,9 +51,9 @@ export default function Home() {
 
 
 
-          <><div className='mt-4 p-4 md:p-4 mb-10 sticky'>
+          <><div className='mt-4 p-4 md:p-4 mb-10 overflow-hidden '>
             <SubmitPost session={session} />
-          </div><div className='mt-10  w-full  md:overflow-scroll  '>
+          </div><div className='mt-10  w-full  '>
               <UserFeed />
 
 
