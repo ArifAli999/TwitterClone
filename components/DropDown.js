@@ -7,7 +7,7 @@ import React from 'react';
 
 function DropDown() {
     return (
-        <div className="z-50">
+        <div className="z-30">
             <Menu as="div" className="relative inline-block text-left">
                 <div>
                     <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20  text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none ">

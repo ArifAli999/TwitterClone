@@ -8,12 +8,12 @@ function UserMenu() {
     return (
         <><div className='flex flex-col justify-between relative h-full    items-center '>
             <div className='w-full'>
-                <UserIcons text="Home" icon={<AiFillHome size={26} className=' p-0.5 w-5 h-5 ' />} />
-                <UserIcons text="Profile" icon={<AiOutlineCopy size={26} className=' p-0.5 w-5 h-5 ' />} />
-                <UserIcons text="Favourites" icon={<AiOutlineHeart size={26} className=' p-0.5 w-5 h-5 ' />} />
-                <UserIcons text="Bookmarks" icon={<BsFillBookmarkDashFill size={26} className=' p-0.5 w-5 h-5 ' />} />
-                <UserIcons text="Announcments" icon={<BsNewspaper size={26} className=' p-0.5 w-5 h-5 ' />} />
-                <UserIcons text="Settings" icon={<AiOutlineSetting size={26} className=' p-0.5 w-5 h-5 ' />} />
+                <UserIcons text="Home" url={'/'} icon={<AiFillHome size={26} className=' p-0.5 w-5 h-5 ' />} />
+                <UserIcons text="Profile" url={'/test'} icon={<AiOutlineCopy size={26} className=' p-0.5 w-5 h-5 ' />} />
+                <UserIcons text="Favourites" url={'/link'} icon={<AiOutlineHeart size={26} className=' p-0.5 w-5 h-5 ' />} />
+                <UserIcons text="Bookmarks" url={'/link'} icon={<BsFillBookmarkDashFill size={26} className=' p-0.5 w-5 h-5 ' />} />
+                <UserIcons text="Announcments" url={'/link'} icon={<BsNewspaper size={26} className=' p-0.5 w-5 h-5 ' />} />
+                <UserIcons text="Settings" url={'/account'} icon={<AiOutlineSetting size={26} className=' p-0.5 w-5 h-5 ' />} />
             </div>
 
             <div className='bg-tonedblack w-full  absolute bottom-0 flex justify-between items-center border-t  border-darkgray'>

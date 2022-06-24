@@ -2,6 +2,7 @@ import React, { useState, Fragment } from 'react'
 import { AiFillCaretRight, AiOutlineUser, AiOutlineHeart, AiOutlineCopy, AiOutlineSetting, AiOutlineLogout } from 'react-icons/ai'
 import { usePopper } from 'react-popper';
 import { Transition, Popover } from '@headlessui/react'
+import { supabase } from '../util/supabaseClient'
 
 function UserPopOver({ setUserInfo }) {
 
@@ -18,7 +19,7 @@ function UserPopOver({ setUserInfo }) {
 
 
     return (
-        <Popover className="relative  w-full text-right p-1">
+        <Popover className="relative  w-full text-right p-1 z-50">
             {({ open }) => (
                 <>
                     <Popover.Button

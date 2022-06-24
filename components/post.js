@@ -63,9 +63,9 @@ function SubmitPost({ session }) {
   }
 
   return (
-    <div className=' bg-black flex flex-col h-full w-full  gap-0 border border-darkgray  rounded  items-center shadow-lg drop-shadow-lg  shadow-black/70 z-20'>
+    <div className=' bg-black flex flex-col h-full w-full  gap-0 border border-darkgray  rounded  items-center shadow-lg drop-shadow-lg  shadow-black/70 -z-20'>
       <div className='w-full p-4 -mb-1 '>
-        <textarea className='w-full h-full p-4  border border-darkgray rounded bg-darkgray/30 placeholder-gray-600/90 text-white text-base font-bold  focus:outline-0 focus:ring-1 focus:ring-violet-500'
+        <textarea className='w-full h-full p-4 -z-50 border border-darkgray rounded bg-darkgray/30 placeholder-gray-600/90 text-white text-base font-bold  focus:outline-0 focus:ring-1 focus:ring-violet-500'
           type="text" placeholder="Whats on your mind today?" value={tweet} onChange={(e) => setTweet(e.target.value)} />
 
       </div>
