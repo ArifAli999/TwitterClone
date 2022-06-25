@@ -11,7 +11,7 @@ function UserMenu() {
                 <UserIcons text="Home" url={'/'} icon={<AiFillHome size={26} className=' p-0.5 w-5 h-5 ' />} />
                 <UserIcons text="Profile" url={'/profile'} icon={<AiOutlineCopy size={26} className=' p-0.5 w-5 h-5 ' />} />
                 <UserIcons text="Favourites" url={'/link'} icon={<AiOutlineHeart size={26} className=' p-0.5 w-5 h-5 ' />} />
-                <UserIcons text="Bookmarks" url={'/link'} icon={<BsFillBookmarkDashFill size={26} className=' p-0.5 w-5 h-5 ' />} />
+                <UserIcons text="Bookmarks" url={'/bookmarks'} icon={<BsFillBookmarkDashFill size={26} className=' p-0.5 w-5 h-5 ' />} />
                 <UserIcons text="Announcments" url={'/link'} icon={<BsNewspaper size={26} className=' p-0.5 w-5 h-5 ' />} />
                 <UserIcons text="Settings" url={'/account'} icon={<AiOutlineSetting size={26} className=' p-0.5 w-5 h-5 ' />} />
             </div>

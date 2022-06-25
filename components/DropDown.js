@@ -3,9 +3,44 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { BsThreeDots, BsPen, BsTrash2, BsBookmarkPlus } from 'react-icons/bs'
 import { MdReport } from 'react-icons/md'
 import React from 'react';
+import { supabase } from '../util/supabaseClient'
+import { useSession } from '../context'
 
 
-function DropDown() {
+function DropDown({ tweetid, setBookmarks, bookmarks, BookmarkedTweets }) {
+
+    const { session } = useSession()
+
+
+    async function deleteTweet(tweetid) {
+        try {
+            const { data, error } = await supabase
+                .from('Bookmarks')
+                .delete()
+                .match({ tweetid: tweetid })
+
+            alert('deleted')
+            BookmarkedTweets();
+
+
+            if (error) {
+                throw error
+            }
+        } catch (error) {
+            alert(error.message)
+        } finally {
+
+        }
+    }
+
+
+    useEffect(() => {
+
+    }, [])
+
+
+
+
     return (
         <div className="z-30">
             <Menu as="div" className="relative inline-block text-left">
@@ -53,10 +88,12 @@ function DropDown() {
                                     <button
                                         className='hover:bg-darkgray transition-all duration-300 ease-linear text-white rounded-none border-b border-darkgray
                                         group flex w-full items-center px-2 py-2 text-sm gap-2'
+                                        onClick={() => deleteTweet(tweetid)}
                                     >
                                         <BsTrash2
                                             className="mr-2  text-purple-white group-hover:text-pink-500 transition-all duration-300 ease-in-out"
                                             aria-hidden="true"
+
 
                                         />
                                         Delete

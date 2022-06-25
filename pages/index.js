@@ -25,10 +25,11 @@ export default function Home() {
       const { data, error } = await supabase
         .from('tweets')
         .select()
-        .order('createdAt', { ascending: false })
+        .order('createdAt', { ascending: false });
 
 
       setTweets(data)
+
 
       if (error) {
         throw error

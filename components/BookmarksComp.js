@@ -11,24 +11,26 @@ import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
 
 
-function UserFeed({ tweets, setTweets }) {
+function BookmarksComp({ bookmarks, setBookmarks, BookmarkedTweets }) {
     const { session } = useSession()
 
     return (
         <>
-            {tweets && tweets.map((tm) => (
+            {bookmarks && bookmarks.map((tm) => (
                 <div className='bg-black border  w-full flex border-bordergray text-white mb-10' key={tm.tweetid}>
                     <div className='flex flex-col  w-full'>
+
 
                         <div className='flex p-4 items-center justify-between  gap-4 border-b border-bordergray w-full'>
                             <div className='flex gap-4 items-center p-1.5'>
                                 <FaUserCircle size={50} className='text-mediumgray' />
                                 <div className='text-xl cursor-pointer mb-1 hover:text-purple-400 transition-all duration-300 ease-linear font-semibold text-stone-100 '>
-                                    <p className='leading-loose'>{tm.username}</p><p className='text-xs font-thin text-gray-300/70 leading-tight'>{tm.createdAt}</p>
+                                    <p className='leading-loose'>{tm.tweets.username}</p><p className='text-xs font-thin text-gray-300/70 leading-tight'>{tm.tweets.createdAt}</p>
                                 </div>
                             </div>
 
-                            {session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} /> : < SmallDropDown />}
+                            {session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} setBookmarks={setBookmarks} bookmarks={bookmarks}
+                                BookmarkedTweets={BookmarkedTweets} /> : < SmallDropDown />}
 
 
 
@@ -36,7 +38,7 @@ function UserFeed({ tweets, setTweets }) {
 
                         <div className='p-6 mt-2'>
                             <p className='text-white/85  font-medium'>
-                                {tm.content}
+                                {tm.tweets.content}
                             </p>
 
                         </div>
@@ -66,4 +68,4 @@ function UserFeed({ tweets, setTweets }) {
     )
 }
 
-export default UserFeed
+export default BookmarksComp
