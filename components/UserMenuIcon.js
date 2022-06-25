@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 
 function UserIcons({ text, icon, url }) {
-    console.log(url)
+
     return (
         <Link href={url} className='text-white font-semibold '>
             <div className='flex items-center gap-0 w-full p-2 border-b border-bordergray group hover:bg-black/60 cursor-pointer duration-300 transition-all ease-out'>

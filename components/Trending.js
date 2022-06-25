@@ -2,7 +2,7 @@ import React from 'react'
 
 function TrendingComp() {
     return (
-        <div className='  w-full h-full mt-4 '>
+        <div className='  w-full h-full mt-4  overflow-hidden sticky top-0 z-30'>
 
             <div className='flex flex-col  mx-auto h-full  w-11/12 '>
 

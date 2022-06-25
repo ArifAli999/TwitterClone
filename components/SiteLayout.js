@@ -13,7 +13,7 @@ function SiteLayout({ children }) {
 
 
     const [userInfo, setUserInfo] = useState(null)
-    console.log(userInfo)
+
 
     useEffect(() => {
         if (session) {
@@ -49,7 +49,7 @@ function SiteLayout({ children }) {
 
 
 
-    console.log(session)
+
     return (
         <div className=''>
             <Header session={session} userInfo={userInfo} setUserInfo={setUserInfo} />
@@ -67,15 +67,7 @@ function SiteLayout({ children }) {
 
 
 
-                <div className='text-white  border-b border-t md:border-l md:border-t-0 border-bordergray  w-2/5 sticky -z-50'>
 
-                    <div className='p-4'>
-                        <TrendingComp />
-
-                        <TrendingPost />
-                    </div>
-
-                </div>
 
 
 
