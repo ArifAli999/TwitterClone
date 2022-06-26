@@ -21,13 +21,8 @@ function UserBookmark() {
                  *
                 )`)
                 .match({ userid: `${session.user.id}` })
-
                 .order('created_at', { ascending: false })
-
-
-
             setBookmarks(data)
-
 
             if (error) {
                 throw error

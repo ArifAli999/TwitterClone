@@ -7,19 +7,13 @@ import { BsCameraVideo, BsImages } from 'react-icons/bs'
 
 import React from 'react'
 
-function SubmitPost({ session, currUser, setTweets, tweets }) {
+function SubmitPost({ session, currUser, tweets }) {
   const [tweet, setTweet] = useState(''); // state for tweet input.
   const [userTweets, setUserTweets] = useState(); // store user tweets
 
-  useEffect(() => {
-    if (session) {
-      getPost()
-
-    }
 
 
 
-  }, [session])
 
 
 
@@ -36,12 +30,9 @@ function SubmitPost({ session, currUser, setTweets, tweets }) {
             content: tweet, createdAt: new Date(), username: x
           }
         ])
-
-
       console.log(tweets)
-      getPost()
-      setTweet('')
 
+      setTweet('')
       if (error) {
         throw error
       }
@@ -52,23 +43,8 @@ function SubmitPost({ session, currUser, setTweets, tweets }) {
     }
   }
 
-  async function getPost() {
-    try {
 
 
-      const { data, error } = await supabase
-        .from('tweets')
-        .select().order('createdAt', { ascending: false })
-      setTweets(data)
-      if (error) {
-        throw error
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-
-    }
-  }
 
   return (
     <div className=' bg-black flex flex-col h- w-  gap-0 border border-darkgray  rounded  items-center shadow-lg drop-shadow-lg  shadow-black/70 -z-20'>

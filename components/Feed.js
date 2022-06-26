@@ -11,7 +11,7 @@ import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
 
 
-function UserFeed({ tweets, setTweets }) {
+function UserFeed({ tweets }) {
     const { session } = useSession()
 
     return (
@@ -28,7 +28,7 @@ function UserFeed({ tweets, setTweets }) {
                                 </div>
                             </div>
 
-                            {session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} /> : < SmallDropDown />}
+                            {session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} /> : < SmallDropDown tweetid={tm.tweetid} />}
 
 
 

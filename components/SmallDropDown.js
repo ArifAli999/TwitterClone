@@ -3,9 +3,37 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { BsThreeDots, BsPen, BsTrash2, BsBookmarkPlus } from 'react-icons/bs'
 import { MdReport } from 'react-icons/md'
 import React from 'react';
+import { supabase } from '../util/supabaseClient'
+import { useSession } from '../context'
 
 
-function SmallDropDown() {
+
+function SmallDropDown({ tweetid }) {
+
+    const { session } = useSession()
+
+    async function addBookmark(tweetid) {
+
+        try {
+            const { data, error } = await supabase
+                .from('Bookmarks')
+                .insert([
+                    { id: `${session.user.id}_${tweetid}`, userid: session.user.id, tweetid: tweetid }
+                ])
+
+            if (error) {
+                throw error
+            }
+            if (!error) {
+                alert('bookmarked')
+            }
+        } catch (error) {
+            alert(error.message)
+        } finally {
+
+        }
+    }
+
     return (
         <div className="z-30">
             <Menu as="div" className="relative inline-block text-left">
@@ -37,6 +65,8 @@ function SmallDropDown() {
                                     <button
                                         className='hover:bg-darkgray transition-all duration-300 ease-linear text-white rounded-none border-b border-darkgray
                                         group flex w-full items-center px-2 py-2 text-sm gap-2'
+                                        onClick={() => addBookmark(tweetid)}
+
                                     >
                                         <BsBookmarkPlus
                                             className="mr-2  text-purple-white group-hover:text-pink-500 transition-all duration-300 ease-in-out"

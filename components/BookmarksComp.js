@@ -17,7 +17,7 @@ function BookmarksComp({ bookmarks, setBookmarks, BookmarkedTweets }) {
     return (
         <>
             {bookmarks && bookmarks.map((tm) => (
-                <div className='bg-black border  w-full flex border-bordergray text-white mb-10' key={tm.tweetid}>
+                <div className='bg-black border  w-full flex flex-row border-bordergray text-white mb-10' key={tm.tweetid}>
                     <div className='flex flex-col  w-full'>
 
 

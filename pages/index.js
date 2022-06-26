@@ -1,73 +1,44 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../util/supabaseClient'
 import Auth from '../components/Auth'
-import Account from '../components/Account'
 import SubmitPost from '../components/post'
 import React from 'react'
-import Header from '../components/Header'
 import UserFeed from '../components/Feed'
-import Footer from '../components/Footer'
-import UserMenu from '../components/UserMenu'
 import TrendingComp from '../components/Trending'
 import TrendingPost from '../components/TrendingPost'
 import { useSession } from '../context'
+import useSWR, { useSWRConfig } from 'swr'
+
+
+
+const fetcher = (url) => fetch(url, { method: "GET" }).then((res) => res.json());
 
 
 export default function Home() {
+
+  const { data: tweetList, error: tweetError } = useSWR("/api/profille", fetcher);
+  console.log(tweetList)
+
   const { session } = useSession()
   const [currUser, setCurrUser] = useState(null);
-  const [tweets, setTweets] = useState([]);
-
-  async function getGlobalTweets() {
-    try {
-
-
-      const { data, error } = await supabase
-        .from('tweets')
-        .select()
-        .order('createdAt', { ascending: false });
-
-
-      setTweets(data)
-
-
-      if (error) {
-        throw error
-      }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-
-    }
-  }
-
 
 
   useEffect(() => {
-    if (session) {
-      getGlobalTweets()
-    }
-
     getCurrentUser();
-
-
   }, [session])
 
 
   async function getCurrentUser() {
-
     if (session) {
       try {
-        let x = '';
-
 
         const { data, error } = await supabase
           .from('profiles')
           .select()
           .eq('id', `${session.user.id}`)
 
-
         setCurrUser(data)
+
         if (error) {
           throw error
         }
@@ -78,8 +49,6 @@ export default function Home() {
       }
 
     }
-
-
   }
 
 
@@ -97,9 +66,9 @@ export default function Home() {
 
           <div className='flex '>
             <div className='mt-4 p-4 md:p-4 mb-10 overflow-hidden flex-1 '>
-              <SubmitPost session={session} currUser={currUser} tweets={tweets} setTweets={setTweets} />
+              <SubmitPost session={session} currUser={currUser} />
               <div className='mt-10    '>
-                <UserFeed tweets={tweets} setTweet={setTweets} />
+                <UserFeed tweets={tweetList} />
 
 
               </div>
