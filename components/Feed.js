@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../util/supabaseClient'
 import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
+import Link from 'next/link'
 
 
 function UserFeed({ tweets }) {
@@ -24,11 +25,15 @@ function UserFeed({ tweets }) {
                             <div className='flex gap-4 items-center p-1.5'>
                                 <FaUserCircle size={50} className='text-mediumgray' />
                                 <div className='text-xl cursor-pointer mb-1 hover:text-purple-400 transition-all duration-300 ease-linear font-semibold text-stone-100 '>
-                                    <p className='leading-loose'>{tm.username}</p><p className='text-xs font-thin text-gray-300/70 leading-tight'>{tm.createdAt}</p>
+                                    <Link href={`/profiles/${tm.userid}`}>
+                                        <p className='leading-loose'>{tm.username}</p>
+                                    </Link>
+
+                                    <p className='text-xs font-thin text-gray-300/70 leading-tight'>{tm.createdAt}</p>
                                 </div>
                             </div>
 
-                            {session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} /> : < SmallDropDown tweetid={tm.tweetid} />}
+                            {session && session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} /> : < SmallDropDown tweetid={tm.tweetid} />}
 
 
 
