@@ -3,6 +3,7 @@ import { supabase } from '../util/supabaseClient'
 import { uid } from 'uid';
 import { BiPaperPlane } from 'react-icons/bi'
 import { BsCameraVideo, BsImages } from 'react-icons/bs'
+import { formatISO } from 'date-fns'
 
 
 import React from 'react'
@@ -27,7 +28,7 @@ function SubmitPost({ session, currUser, tweets }) {
         .insert([
           {
             tweetid: `${tweetid}`, userid: `${session.user.id}`,
-            content: tweet, createdAt: new Date(), username: x
+            content: tweet, createdAt: formatISO(new Date()), username: x
           }
         ])
       console.log(tweets)

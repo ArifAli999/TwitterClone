@@ -18,13 +18,16 @@ function DropDown({ tweetid, setBookmarks, bookmarks, BookmarkedTweets }) {
                 .from('tweets')
                 .delete()
                 .match({ tweetid: tweetid })
-            BookmarkedTweets()
-            alert('deleted')
+
+
 
 
 
             if (error) {
                 throw error
+            }
+            if (!error) {
+                alert('deleted')
             }
         } catch (error) {
             alert(error.message)

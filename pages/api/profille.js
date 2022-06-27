@@ -8,15 +8,21 @@ const CommentsApi = async (req, res) => {
     switch (req.method) {
         // Get all comments
         case "GET":
-            const { data: getData, error: getError } = await supabase.from("tweets").select("*").order('createdAt', { ascending: false });
+            const { data: getData, error: getError } = await supabase.from("tweets").select("*", { count: "exact" }).order('createdAt', { ascending: false })
             if (getError) {
                 return res.status(500).json({ message: getError.message });
             }
             return res.status(200).json(getData);
         // Add comment
-        case "POST":
-            const comment = req.body;
-            const { data: postData, error: postError } = await supabase.from("tweets").insert(comment);
+        case "CUSTOM":
+            const tweetid = req.body;
+
+
+            const { data: postData, error: postError } = await supabase
+                .from('tweets')
+                .delete()
+                .match({ tweetid: tweetid })
+
             if (postError) {
                 return res.status(500).json({ message: postError.message });
             }

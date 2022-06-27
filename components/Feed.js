@@ -10,6 +10,8 @@ import { supabase } from '../util/supabaseClient'
 import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
 import Link from 'next/link'
+import { format, formatDistanceToNow } from 'date-fns'
+
 
 
 function UserFeed({ tweets }) {
@@ -29,7 +31,9 @@ function UserFeed({ tweets }) {
                                         <p className='leading-loose'>{tm.username}</p>
                                     </Link>
 
-                                    <p className='text-xs font-thin text-gray-300/70 leading-tight'>{tm.createdAt}</p>
+                                    <p className='text-xs font-thin text-gray-300/70 leading-tight'>
+                                        {formatDistanceToNow(new Date(tm.createdAt), { addSuffix: true })}
+                                    </p>
                                 </div>
                             </div>
 

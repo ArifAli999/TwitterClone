@@ -7,7 +7,8 @@ import UserFeed from '../components/Feed'
 import TrendingComp from '../components/Trending'
 import TrendingPost from '../components/TrendingPost'
 import { useSession } from '../context'
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR, { mutate, useSWRConfig } from 'swr'
+import InfiniteScroll from "react-infinite-scroll-component";
 
 
 
@@ -53,7 +54,7 @@ export default function Home() {
 
 
   return (
-    <div className="w-full  ">
+    <div className="w-full h-full   ">
 
 
       {!session ? <Auth /> :
@@ -68,7 +69,9 @@ export default function Home() {
             <div className='mt-4 p-4 md:p-4 mb-10 overflow-hidden flex-1 '>
               <SubmitPost session={session} currUser={currUser} />
               <div className='mt-10    '>
+
                 <UserFeed tweets={tweetList} />
+
 
 
               </div>
