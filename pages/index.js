@@ -17,16 +17,43 @@ const fetcher = (url) => fetch(url, { method: "GET" }).then((res) => res.json())
 
 export default function Home() {
 
-  const { data: tweetList, error: tweetError } = useSWR("/api/profille", fetcher);
-  console.log(tweetList)
+  const { data: tweetList, error: tweetError, mutate } = useSWR("/api/profille", fetcher);
 
   const { session } = useSession()
   const [currUser, setCurrUser] = useState(null);
+  const [tweets, setTweets] = useState([]);
 
 
   useEffect(() => {
     getCurrentUser();
+    getAllTweets()
   }, [session])
+
+
+  async function getAllTweets() {
+    try {
+      const { data, error } = await supabase
+        .from('tweets')
+        .select(`*, Comments(
+                 *
+                ), profiles(*)`)
+        .order('createdAt', { ascending: false })
+
+
+      console.log(data)
+      setTweets(data);
+
+
+      if (error) {
+        throw error
+      }
+    } catch (error) {
+      alert(error.message)
+    } finally {
+
+    }
+  }
+
 
 
   async function getCurrentUser() {
@@ -53,6 +80,11 @@ export default function Home() {
   }
 
 
+
+
+
+
+
   return (
     <div className="w-full h-full   ">
 
@@ -67,10 +99,10 @@ export default function Home() {
 
           <div className='flex '>
             <div className='mt-4 p-4 md:p-4 mb-10 overflow-hidden flex-1 '>
-              <SubmitPost session={session} currUser={currUser} />
+              <SubmitPost session={session} currUser={currUser} setTweets={setTweets} getAllTweets={getAllTweets} />
               <div className='mt-10    '>
 
-                <UserFeed tweets={tweetList} />
+                <UserFeed tweets={tweets} setTweets={setTweets} getAllTweets={getAllTweets} />
 
 
 

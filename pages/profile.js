@@ -16,7 +16,7 @@ function UserProfilePage() {
 
 
         getCurrentUser()
-        getUserTweets()
+        getAllTweets()
 
     }, [session])
 
@@ -51,7 +51,7 @@ function UserProfilePage() {
     }
 
 
-    async function getUserTweets() {
+    async function getAllTweets() {
         if (session) {
             try {
 
@@ -105,7 +105,7 @@ function UserProfilePage() {
 
 
                         <div className='flex flex-col justify-between'>
-                            <UserFeed tweets={userTweets} />
+                            <UserFeed tweets={userTweets} getAllTweets={getAllTweets} />
 
                         </div>
 

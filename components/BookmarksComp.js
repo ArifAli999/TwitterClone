@@ -11,7 +11,7 @@ import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
 
 
-function BookmarksComp({ bookmarks, setBookmarks, BookmarkedTweets }) {
+function BookmarksComp({ bookmarks, setBookmarks, getAllTweets }) {
     const { session } = useSession()
 
     return (
@@ -30,7 +30,7 @@ function BookmarksComp({ bookmarks, setBookmarks, BookmarkedTweets }) {
                             </div>
 
                             {session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} setBookmarks={setBookmarks} bookmarks={bookmarks}
-                                BookmarkedTweets={BookmarkedTweets} /> : < SmallDropDown />}
+                                getAllTweets={getAllTweets} /> : < SmallDropDown />}
 
 
 

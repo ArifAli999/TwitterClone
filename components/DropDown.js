@@ -7,7 +7,7 @@ import { supabase } from '../util/supabaseClient'
 import { useSession } from '../context'
 
 
-function DropDown({ tweetid, setBookmarks, bookmarks, BookmarkedTweets }) {
+function DropDown({ tweetid, setBookmarks, bookmarks, getAllTweets }) {
 
     const { session } = useSession()
 
@@ -32,7 +32,7 @@ function DropDown({ tweetid, setBookmarks, bookmarks, BookmarkedTweets }) {
         } catch (error) {
             alert(error.message)
         } finally {
-
+            getAllTweets()
         }
     }
 

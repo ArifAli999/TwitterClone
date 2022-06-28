@@ -8,7 +8,7 @@ import { formatISO } from 'date-fns'
 
 import React from 'react'
 
-function SubmitPost({ session, currUser, tweets }) {
+function SubmitPost({ session, currUser, tweets, getAllTweets }) {
   const [tweet, setTweet] = useState(''); // state for tweet input.
   const [userTweets, setUserTweets] = useState(); // store user tweets
 
@@ -40,6 +40,7 @@ function SubmitPost({ session, currUser, tweets }) {
     } catch (error) {
       alert(error.message)
     } finally {
+      getAllTweets();
       alert('added')
     }
   }

@@ -9,7 +9,7 @@ function UserBookmark() {
     const { session } = useSession()
     const [bookmarks, setBookmarks] = useState(null);
 
-    async function BookmarkedTweets() {
+    async function getAllTweets() {
         try {
             const { data, error } = await supabase
                 // go to the bookmarks table, get all the data where userid = session.user.id and also
@@ -35,9 +35,13 @@ function UserBookmark() {
     }
 
 
+
+
+
     useEffect(() => {
         if (session) {
-            BookmarkedTweets()
+            getAllTweets()
+
         }
     }, [session])
 
@@ -50,7 +54,7 @@ function UserBookmark() {
                     <h2 className='text-white text-2xl font-thin mb-4 mt-4 ml-4'>Account Settings</h2>
                     <div className='flex flex-col justify-between'>
 
-                        <BookmarksComp bookmarks={bookmarks} setBookmarks={setBookmarks} BookmarkedTweets={BookmarkedTweets} />
+                        <BookmarksComp bookmarks={bookmarks} setBookmarks={setBookmarks} getAllTweets={getAllTweets} />
 
                     </div>
 

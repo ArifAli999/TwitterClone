@@ -30,7 +30,7 @@ function RegisterModal({ registerModal, setRegisterModal }) {
             console.log(user)
 
             if (error) throw error
-            alert('Check your email for the login link')
+
 
         } catch (error) {
             alert(error.error_description || error.message)
@@ -131,7 +131,7 @@ function RegisterModal({ registerModal, setRegisterModal }) {
                                                 handleLogin(email)
                                             }}
                                                 className="bg-violet-500 px-4 text-xs text-white font-bold py-1.5 rounded border-violet-600 border-b-2 
-                                            hover:bg-violet-600 transition-all mr-4 duration-500 ease-in-out cursor-pointer ">Sign Up</button>
+                                            hover:bg-violet-600 transition-all mr-4 duration-500 ease-in-out cursor-pointer ">Log in</button>
 
 
 

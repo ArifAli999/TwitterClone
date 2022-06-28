@@ -14,8 +14,34 @@ import { format, formatDistanceToNow } from 'date-fns'
 
 
 
-function UserFeed({ tweets }) {
+function UserFeed({ tweets, setTweets, getAllTweets }) {
+
     const { session } = useSession()
+    const [commentBox, setCommentBox] = useState(false);
+
+
+
+
+    async function getComments(tweetid) {
+        try {
+            const { data, error } = await supabase
+                .from('tweets')
+                .select(`*, Comments(
+                 *
+                )`)
+
+            console.log(data)
+
+            if (error) {
+                throw error
+            }
+        } catch (error) {
+            alert(error.message)
+        } finally {
+
+        }
+    }
+
 
     return (
         <>
@@ -37,7 +63,7 @@ function UserFeed({ tweets }) {
                                 </div>
                             </div>
 
-                            {session && session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} /> : < SmallDropDown tweetid={tm.tweetid} />}
+                            {session && session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} getAllTweets={getAllTweets} /> : < SmallDropDown tweetid={tm.tweetid} />}
 
 
 
@@ -55,7 +81,11 @@ function UserFeed({ tweets }) {
                                 <AiFillHeart size={20} /> <span className='text-xs text-white'>4</span>
                             </div>
 
-                            <div className='text-blue-200 cursor-pointer hover:text-blue-300 transition-all duration-300 ease-in-out flex items-center gap-3'>
+                            <div className='text-blue-200 cursor-pointer hover:text-blue-300 transition-all duration-300 ease-in-out flex items-center gap-3'
+                                onClick={() => {
+                                    setCommentBox(true);
+                                    showComments(tm.tweetid)
+                                }}>
                                 <BiComment size={20} /><span className='text-xs text-white'>1</span>
                             </div>
 

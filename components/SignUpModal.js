@@ -15,8 +15,6 @@ function SignUpModal({ signUpModal, setSignUpModal }) {
     const [username, setUsername] = useState('');
 
 
-
-
     function closeModal() {
         setSignUpModal(false)
     }
