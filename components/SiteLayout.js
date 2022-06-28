@@ -57,7 +57,7 @@ function SiteLayout({ children }) {
             <div className='flex md:flex-row flex-col w-full min-h-screen gap-0 p-0'>
 
                 {session ? (
-                    <div className='text-white  border-b border-t md:border-r md:border-t-0 md:border-b-0 border-bordergray   w-full md:w-2/6 sticky top-0 z-30 overflow-hidden  '>
+                    <div className='text-white  border-b border-t md:border-r md:border-t-0 md:border-b-0 border-bordergray   w-full md:w-2/6 md:sticky top-0 z-30 overflow-hidden  '>
                         <div className='h-full  w-full overflow-hidden sticky top-0'>
                             <UserMenu />
                         </div>
@@ -67,7 +67,7 @@ function SiteLayout({ children }) {
 
 
 
-                <div className=' p-0  md:w-min-3/12 w-full h-screen overflow-scroll scroll-smooth'> {children}</div>
+                <div className=' p-0  md:w-min-3/12 w-full h-screen md:overflow-scroll scroll-smooth'> {children}</div>
 
 
 

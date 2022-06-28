@@ -78,7 +78,7 @@ export default function Home() {
             </div>
 
 
-            <div className='text-white  border-b border-t md:border-l md:border-t-0 border-bordergray  w-2/5  -z-50 sticky top-0 overflow '>
+            <div className='text-white  border-b border-t md:border-l md:border-t-0 border-bordergray  w-2/5  -z-50 sticky top-0 overflow  md:block hidden'>
 
               <div className='p-4  sticky top-0'>
                 <TrendingComp />

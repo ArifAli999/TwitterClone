@@ -23,15 +23,15 @@ function Header({ session, userInfo, setUserInfo }) {
             ) : (
                 <div className=' w-full flex flex-row items-center  justify-between gap- '>
 
-                    <div className='mr-4 p-4  flex leading-loose'>
-                        Welcome back {userInfo && userInfo.map((p)=> (<p key={p.id} className='ml-2'>{p.username}</p>))},
+                    <div className='mr-4 p-4  flex leading-tight'>
+                        Welcome back {userInfo && userInfo.map((p) => (<p key={p.id} className='ml-2'>{p.username}</p>))},
                     </div>
 
 
 
                     <div className=' p-4 w-full md:w-1/2 text-white'>
-                      
-                        <UserPopOver userInfo={userInfo} setUserInfo={setUserInfo}/>
+
+                        <UserPopOver userInfo={userInfo} setUserInfo={setUserInfo} />
                     </div>
 
                 </div>
