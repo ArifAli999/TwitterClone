@@ -6,38 +6,48 @@ import { supabase } from '../util/supabaseClient'
 
 
 
-function RegisterModal({ registerModal, setRegisterModal }) {
+function SignUpModal({ signUpModal, setSignUpModal }) {
 
 
     const [loading, setLoading] = useState(false)
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+
+
 
 
     function closeModal() {
-        setRegisterModal(false)
+        setSignUpModal(false)
     }
 
 
-    const handleLogin = async (email) => {
+    const handleSignUp = async () => {
         try {
-            setLoading(true)
-            const { user, session, error } = await supabase.auth.signIn({
-                email: email,
-                password: password,
-            });
+            setLoading(true);
 
-            console.log(user)
+            const { user, session, error } = await supabase.auth.signUp(
+                {
+                    email: email,
+                    password: password,
+                },
+                {
+                    data: {
+                        username: username
+
+                    }
+                }
+            )
 
             if (error) throw error
-            alert('Check your email for the login link')
+            alert('Account registered.')
 
         } catch (error) {
             alert(error.error_description || error.message)
         }
         finally {
             setLoading(false)
-            setRegisterModal(false)
+            setSignUpModal(false)
         }
     }
 
@@ -50,7 +60,7 @@ function RegisterModal({ registerModal, setRegisterModal }) {
 
 
 
-            <Transition appear show={registerModal} as={Fragment}>
+            <Transition appear show={signUpModal} as={Fragment}>
                 <Dialog as="div" className="relative z-10 bg-black" onClose={closeModal}>
                     <Transition.Child
                         as={Fragment}
@@ -94,29 +104,44 @@ function RegisterModal({ registerModal, setRegisterModal }) {
                                         <div className="p-2 flex flex-col items-center justify-center gap-4 w-full mt-2">
 
                                             <>
-                                                <label for="email" className='w-full text-xs mb-0 text-gray-50/80 font-bold'>
+
+                                                <label className='w-full text-xs mb-0 text-gray-50/80 font-bold'>
+                                                    Username
+                                                    <input
+                                                        placeholder="email"
+                                                        type="text"
+                                                        className="border-2 border-bordergray p-4 rounded-sm text-white w-full mt-2 focus:outline-none placeholder-lightgray  focus:border-purple-400/40  bg-tonedblack/70 "
+                                                        value={username}
+                                                        onChange={(e) => setUsername(e.target.value)}
+
+                                                    />
+                                                </label>
+
+
+                                                <label className='w-full text-xs mb-0 text-gray-50/80 font-bold'>
                                                     Email
                                                     <input
                                                         placeholder="email"
                                                         type="text"
-                                                        className="border-2 border-gray-700/50 p-4 rounded-sm text-white w-full mt-2 focus:outline-none placeholder-gray-300/80  focus:border-purple-500/95 focus:ring-lime-200 bg-slate-900/60"
+                                                        className="border-2 border-bordergray p-4 rounded-sm text-white w-full mt-2 focus:outline-none placeholder-lightgray  focus:border-purple-400/40  bg-tonedblack/70 "
                                                         value={email}
                                                         onChange={(e) => setEmail(e.target.value)}
 
                                                     />
                                                 </label>
 
-                                                <label for="email" className='w-full text-xs mb-0 text-gray-50/80 font-bold'>
+                                                <label className='w-full text-xs mb-0 text-gray-50/80 font-bold'>
                                                     Password
                                                     <input
                                                         placeholder="email"
                                                         type="text"
-                                                        className="border-2 border-gray-700/50 p-4 rounded-sm text-white w-full mt-2 focus:outline-none placeholder-gray-300/80  focus:border-purple-500/95 focus:ring-lime-200 bg-slate-900/60"
+                                                        className="border-2 border-bordergray p-4 rounded-sm text-white w-full mt-2 focus:outline-none placeholder-lightgray  focus:border-purple-400/40  bg-tonedblack/70 "
                                                         value={password}
                                                         onChange={(e) => setPassword(e.target.value)}
 
                                                     />
                                                 </label>
+
 
                                             </>
 
@@ -128,7 +153,7 @@ function RegisterModal({ registerModal, setRegisterModal }) {
                                         <div className='flex justify-center bg-black '>
                                             <button onClick={(e) => {
                                                 e.preventDefault()
-                                                handleLogin(email)
+                                                handleSignUp()
                                             }}
                                                 className="bg-violet-500 px-4 text-xs text-white font-bold py-1.5 rounded border-violet-600 border-b-2 
                                             hover:bg-violet-600 transition-all mr-4 duration-500 ease-in-out cursor-pointer ">Sign Up</button>
@@ -147,4 +172,4 @@ function RegisterModal({ registerModal, setRegisterModal }) {
     )
 }
 
-export default RegisterModal
+export default SignUpModal
