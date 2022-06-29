@@ -20,29 +20,43 @@ function SubmitPost({ session, currUser, tweets, getAllTweets }) {
 
 
   async function addPost() {
-    try {
-      const tweetid = uid();
-      const x = currUser && currUser.map((p) => (p.username)).toString()
-      const { data, error } = await supabase
-        .from('tweets')
-        .insert([
-          {
-            tweetid: `${tweetid}`, userid: `${session.user.id}`,
-            content: tweet, createdAt: formatISO(new Date()), username: x
-          }
-        ])
-      console.log(tweets)
 
-      setTweet('')
-      if (error) {
-        throw error
+    if (tweet.trim().length > 0) {
+
+      try {
+        const tweetid = uid();
+        const x = currUser && currUser.map((p) => (p.username)).toString()
+
+
+        const { data, error } = await supabase
+          .from('tweets')
+          .insert([
+            {
+              tweetid: `${tweetid}`, userid: `${session.user.id}`,
+              content: tweet, createdAt: formatISO(new Date()), username: x
+            }
+          ])
+
+        console.log(tweet.trim().length)
+
+        setTweet('')
+        if (error) {
+          throw error
+        }
+      } catch (error) {
+        alert(error.message)
+      } finally {
+        getAllTweets();
+        alert('added')
       }
-    } catch (error) {
-      alert(error.message)
-    } finally {
-      getAllTweets();
-      alert('added')
+
     }
+
+    else {
+      alert('please enter a tweet')
+    }
+
+
   }
 
 

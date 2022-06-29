@@ -17,20 +17,35 @@ import { format, formatDistanceToNow } from 'date-fns'
 function UserFeed({ tweets, setTweets, getAllTweets }) {
 
     const { session } = useSession()
-    const [commentBox, setCommentBox] = useState(false);
+    const [commentBox, setCommentBox] = useState(null);
+    const [cmmt, setCmmt] = useState(false)
 
 
 
 
-    async function getComments(tweetid) {
+    async function showCommentBox(tweetid) {
         try {
             const { data, error } = await supabase
-                .from('tweets')
-                .select(`*, Comments(
+                .from('Comments')
+                .select(`*, tweets(
                  *
                 )`)
+                .match({ tweetid: tweetid })
+
+
+
+
 
             console.log(data)
+
+            if (!data.length) {
+                console.log('no')
+            }
+
+            if (data.length > 0) {
+                setCommentBox(data)
+            }
+
 
             if (error) {
                 throw error
@@ -41,6 +56,11 @@ function UserFeed({ tweets, setTweets, getAllTweets }) {
 
         }
     }
+
+
+
+
+
 
 
     return (
@@ -72,6 +92,8 @@ function UserFeed({ tweets, setTweets, getAllTweets }) {
                         <div className='p-6 mt-2'>
                             <p className='text-white/85  font-medium'>
                                 {tm.content}
+
+
                             </p>
 
                         </div>
@@ -81,19 +103,47 @@ function UserFeed({ tweets, setTweets, getAllTweets }) {
                                 <AiFillHeart size={20} /> <span className='text-xs text-white'>4</span>
                             </div>
 
-                            <div className='text-blue-200 cursor-pointer hover:text-blue-300 transition-all duration-300 ease-in-out flex items-center gap-3'
+
+
+                            {cmmt ? (<div className='text-blue-200 cursor-pointer hover:text-blue-300 transition-all duration-300 ease-in-out flex items-center gap-3'
                                 onClick={() => {
-                                    setCommentBox(true);
-                                    showComments(tm.tweetid)
-                                }}>
+                                    showCommentBox(tm.tweetid)
+                                    setCmmt(false)
+                                }} key={tm.tweetid}>
+
+
                                 <BiComment size={20} /><span className='text-xs text-white'>1</span>
-                            </div>
+                            </div>) : (<div className='text-blue-200 cursor-pointer hover:text-blue-300 transition-all duration-300 ease-in-out flex items-center gap-3'
+                                onClick={() => {
+                                    showCommentBox(tm.tweetid)
+                                    setCmmt(true)
+                                }} key={tm.tweetid}>
 
 
-                            <IoIosShareAlt size={20} className='absolute right-4 cursor-pointer hover:text-violet-600 transition-all duration-300 ease-in-out' />
+                                <BiComment size={20} /><span className='text-xs text-white'>1</span>
+                            </div>)}
+
+                            <Link href={`/tweets/${tm.tweetid}`} >
+                                <a>   <IoIosShareAlt size={20} className='absolute right-4 cursor-pointer hover:text-violet-600 transition-all duration-300 ease-in-out' />
+                                </a>
+                            </Link>
 
 
                         </div>
+
+                        {cmmt ? (<div className=''>
+                            {commentBox && commentBox.filter((cm) => cm.tweetid == tm.tweetid).map((cm) => (
+                                <div className='p-4 bg-tonedblack border-t border-bordergray flex-col items-center '>
+                                    <div className='flex items-center gap-2 mb-4'>
+                                        <FaUserCircle size={40} className='text-mediumgray' />
+                                        <p className='text-md'>{cm.username}</p>
+                                    </div>
+                                    <div className=''>
+                                        {cm.content}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>) : null}
 
 
 

@@ -17,7 +17,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps },
 
 
   return (
-    <>
+    <div className='scrollbar-hide'>
 
       <UserContextProvider>
 
@@ -27,7 +27,7 @@ export default function MyApp({ Component, pageProps: { session, ...pageProps },
 
       </UserContextProvider>
 
-    </>
+    </div>
 
 
   )
