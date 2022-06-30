@@ -3,9 +3,13 @@ import { supabase } from '../util/supabaseClient'
 import { useSession } from '../context'
 import GeneralInfo from '../components/useraccount/GeneralInfo'
 import Auth from '../components/Auth'
+import { useUser } from '../context//user'
 
 function UserAccountPage() {
     const { session } = useSession()
+
+    const { user } = useUser()
+    
 
     return (
         <>

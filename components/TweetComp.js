@@ -28,9 +28,9 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
 
     async function replyTweet(username, userid) {
 
-        setReply(username)
+        setReply(userid)
         if (reply) {
-            setCmmt(`@${reply}`)
+            setCmmt(`@${username}`)
         }
 
 
@@ -46,7 +46,7 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
 
                 const x = session.user.id
                 const username = currUser && currUser.map((p) => (p.username)).toString()
-
+                console.log(reply)
 
                 const { data, error } = await supabase
                     .from('Comments')
@@ -54,6 +54,7 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
                         {
                             tweetid: tweetid, userid: x,
                             content: cmmt, created_at: formatISO(new Date()), username: username,
+                            ReplyingTo: username
 
                         }
                     ])
@@ -78,6 +79,7 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
 
 
     }
+
 
 
 
@@ -163,6 +165,8 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
                                             <p className='text-md'>{cm.username}<br />
                                                 <span className='text-xs text-gray-300/70 leading-tight'>
                                                     {formatDistanceToNow(new Date(cm.created_at), { addSuffix: true })}</span></p>
+
+
 
                                         </div>
                                         <div className='ml-2 p-6'>

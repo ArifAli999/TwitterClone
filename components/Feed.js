@@ -16,6 +16,7 @@ import { format, formatDistanceToNow } from 'date-fns'
 
 function UserFeed({ tweets, setTweets, getAllTweets }) {
 
+    console.log(tweets)
     const { session } = useSession()
     const [commentBox, setCommentBox] = useState(null);
     const [cmmt, setCmmt] = useState(false)
@@ -74,7 +75,7 @@ function UserFeed({ tweets, setTweets, getAllTweets }) {
                                 <FaUserCircle size={50} className='text-mediumgray' />
                                 <div className='text-xl cursor-pointer mb-1 hover:text-purple-400 transition-all duration-300 ease-linear font-semibold text-stone-100 '>
                                     <Link href={`/profiles/${tm.userid}`}>
-                                        <p className='leading-loose'>{tm.username}</p>
+                                        <p className='leading-loose'>{tm.profiles && tm.profiles.username}</p>
                                     </Link>
 
                                     <p className='text-xs font-thin text-gray-300/70 leading-tight'>
