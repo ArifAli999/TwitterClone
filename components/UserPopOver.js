@@ -12,7 +12,7 @@ function UserPopOver({ setUserInfo }) {
 
     function handleSignOut() {
         supabase.auth.signOut()
-        setUserInfo(null);
+
     }
 
 

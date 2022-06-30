@@ -4,16 +4,19 @@ import { uid } from 'uid';
 import { BiPaperPlane } from 'react-icons/bi'
 import { BsCameraVideo, BsImages } from 'react-icons/bs'
 import { formatISO } from 'date-fns'
+import { useUser } from '../context/user';
 
 
 import React from 'react'
+import { AiOutlineConsoleSql } from 'react-icons/ai';
 
-function SubmitPost({ session, currUser, tweets, getAllTweets }) {
+function SubmitPost({ session, tweets, getAllTweets }) {
   const [tweet, setTweet] = useState(''); // state for tweet input.
   const [userTweets, setUserTweets] = useState(); // store user tweets
 
 
 
+  const { user } = useUser();
 
 
 
@@ -25,7 +28,7 @@ function SubmitPost({ session, currUser, tweets, getAllTweets }) {
 
       try {
         const tweetid = uid();
-        const x = currUser && currUser.map((p) => (p.username)).toString()
+        const x = user && user.map((p) => (p.username)).toString()
 
 
         const { data, error } = await supabase

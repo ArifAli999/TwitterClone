@@ -9,7 +9,8 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../util/supabaseClient'
 import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
-
+import BookMarkDrop from './BookMarkDrop'
+import Link from 'next/link'
 
 function BookmarksComp({ bookmarks, setBookmarks, getAllTweets }) {
     const { session } = useSession()
@@ -29,7 +30,7 @@ function BookmarksComp({ bookmarks, setBookmarks, getAllTweets }) {
                                 </div>
                             </div>
 
-                            {session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} setBookmarks={setBookmarks} bookmarks={bookmarks}
+                            {session.user.id == tm.userid ? <BookMarkDrop tweetid={tm.tweetid} setBookmarks={setBookmarks} bookmarks={bookmarks}
                                 getAllTweets={getAllTweets} /> : < SmallDropDown />}
 
 
@@ -52,9 +53,9 @@ function BookmarksComp({ bookmarks, setBookmarks, getAllTweets }) {
                                 <BiComment size={20} /><span className='text-xs text-white'>1</span>
                             </div>
 
-
-                            <IoIosShareAlt size={20} className='absolute right-4 cursor-pointer hover:text-violet-600 transition-all duration-300 ease-in-out' />
-
+                            <Link href={`/tweets/${tm.tweetid}`} >
+                                <IoIosShareAlt size={20} className='absolute right-4 cursor-pointer hover:text-violet-600 transition-all duration-300 ease-in-out' />
+                            </Link>
 
                         </div>
 

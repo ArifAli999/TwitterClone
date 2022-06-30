@@ -6,53 +6,21 @@ import { supabase } from '../util/supabaseClient'
 import UserMenu from './UserMenu'
 import TrendingComp from './Trending'
 import TrendingPost from './TrendingPost'
+import { useUser } from '../context/user'
+
 
 
 function SiteLayout({ children }) {
     const { session } = useSession();
 
 
-    const [userInfo, setUserInfo] = useState(null)
-
-
-    useEffect(() => {
-        if (session) {
-            getCurrentUser()
-        }
-
-        if (!session) {
-            setUserInfo(null);
-        }
-
-    }, [session])
-
-    async function getCurrentUser() {
-        try {
-            let x = '';
-
-            const { data, error } = await supabase
-                .from('profiles')
-                .select()
-                .eq('id', `${session.user.id}`)
-
-
-            setUserInfo(data)
-            if (error) {
-                throw error
-            }
-        } catch (error) {
-            alert(error.message)
-        } finally {
-
-        }
-    }
 
 
 
 
     return (
         <div className=' w-full'>
-            <Header session={session} userInfo={userInfo} setUserInfo={setUserInfo} />
+            <Header />
 
             <div className='flex md:flex-row flex-col w-full min-h-screen gap-0 p-0'>
 

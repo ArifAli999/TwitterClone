@@ -65,7 +65,7 @@ export default function SingleTweet({ post, id }) {
 
 
                 setTweets(data)
-                console.log(tweets)
+                console.log(data)
 
 
                 if (error) {

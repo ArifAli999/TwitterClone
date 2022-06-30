@@ -7,19 +7,18 @@ import UserFeed from '../components/Feed'
 import TrendingComp from '../components/Trending'
 import TrendingPost from '../components/TrendingPost'
 import { useSession } from '../context'
-import useSWR, { mutate, useSWRConfig } from 'swr'
-import InfiniteScroll from "react-infinite-scroll-component";
+import { useUser } from '../context/user'
 
 
-
-const fetcher = (url) => fetch(url, { method: "GET" }).then((res) => res.json());
 
 
 export default function Home() {
 
-  const { data: tweetList, error: tweetError, mutate } = useSWR("/api/profille", fetcher);
 
   const { session } = useSession()
+  const { user } = useUser()
+
+
   const [currUser, setCurrUser] = useState(null);
   const [tweets, setTweets] = useState([]);
 
@@ -40,7 +39,7 @@ export default function Home() {
         .order('createdAt', { ascending: false })
 
 
-      console.log(data)
+
       setTweets(data);
 
 
@@ -61,11 +60,11 @@ export default function Home() {
       try {
 
         const { data, error } = await supabase
-          .from('profiles')
-          .select()
-          .eq('id', `${session.user.id}`)
+          .from('tweets')
+          .select('*, profiles!inner(*), Comments(*)')
+          .eq('userid', session.user.id)
 
-        setCurrUser(data)
+        console.log(data)
 
         if (error) {
           throw error
@@ -99,7 +98,7 @@ export default function Home() {
 
           <div className='flex '>
             <div className='mt-4 p-4 md:p-4 mb-10 overflow-hidden flex-1 '>
-              <SubmitPost session={session} currUser={currUser} setTweets={setTweets} getAllTweets={getAllTweets} />
+              <SubmitPost session={session} setTweets={setTweets} getAllTweets={getAllTweets} />
               <div className='mt-10    '>
 
                 <UserFeed tweets={tweets} setTweets={setTweets} getAllTweets={getAllTweets} />
@@ -120,23 +119,6 @@ export default function Home() {
 
             </div>
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         )
 

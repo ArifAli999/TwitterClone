@@ -10,18 +10,33 @@ import { supabase } from '../util/supabaseClient'
 import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
 import Link from 'next/link'
-import { format, formatDistanceToNow } from 'date-fns'
+import { format, formatDistanceToNow, set } from 'date-fns'
 import { formatISO } from 'date-fns'
+import CommentDrop from './CommentDrop'
+import { useRef } from 'react'
 
 
 
-function TweetComp({ tweets, setTweets, getTweets, currUser, getAllTweets }) {
+function TweetComp({ tweets, setTweets, currUser, getTweets }) {
+    const firstItemRef = useRef(null);
 
     const { session } = useSession()
     const [commentBox, setCommentBox] = useState(null);
     const [cmmt, setCmmt] = useState('')
+    const [reply, setReply] = useState("")
 
 
+    async function replyTweet(username, userid) {
+
+        setReply(username)
+        if (reply) {
+            setCmmt(`@${reply}`)
+        }
+
+
+
+
+    }
 
     async function addCommment(tweetid) {
 
@@ -38,11 +53,10 @@ function TweetComp({ tweets, setTweets, getTweets, currUser, getAllTweets }) {
                     .insert([
                         {
                             tweetid: tweetid, userid: x,
-                            content: cmmt, created_at: formatISO(new Date()), username: username
+                            content: cmmt, created_at: formatISO(new Date()), username: username,
+
                         }
                     ])
-
-
 
                 setCmmt('')
                 if (error) {
@@ -94,7 +108,7 @@ function TweetComp({ tweets, setTweets, getTweets, currUser, getAllTweets }) {
                                     </div>
                                 </div>
 
-                                {session && session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} getTweets={getAllTweets} /> : < SmallDropDown tweetid={tm.tweetid} />}
+                                {session && session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} getTweets={getTweets} /> : < SmallDropDown tweetid={tm.tweetid} />}
 
 
 
@@ -139,7 +153,9 @@ function TweetComp({ tweets, setTweets, getTweets, currUser, getAllTweets }) {
                                     <div className=' bg-black/80 border border-bordergray flex-col items-center relative mb-4 rounded' key={cm.commentid}>
                                         <div className='absolute right-4 top-4'>
 
-                                            {session && session.user.id == cm.userid ? <DropDown tweetid={tm.tweetid} getAllTweets={getAllTweets} /> : < SmallDropDown tweetid={tm.tweetid} />}
+                                            {session && session.user.id == cm.userid ? <CommentDrop tweetid={tm.tweetid} getTweets={getTweets} cmtid={cm.commentid} /> : < SmallDropDown tweetid={tm.tweetid} />}
+
+
                                         </div>
 
                                         <div className='border-b p-4 border-bordergray flex items-center gap-2 mb-0 bg-lightblack/80'>
@@ -152,6 +168,11 @@ function TweetComp({ tweets, setTweets, getTweets, currUser, getAllTweets }) {
                                         <div className='ml-2 p-6'>
                                             {cm.content}
                                         </div>
+                                        <button className='p-2 bg-lightblack border-t border-bordergray w-full text-white'
+                                            onClick={() => {
+                                                replyTweet(cm.username, cm.userid)
+                                                firstItemRef.current.scrollIntoView()
+                                            }}>Reply</button>
                                     </div>
                                 ))}
 
@@ -174,14 +195,15 @@ function TweetComp({ tweets, setTweets, getTweets, currUser, getAllTweets }) {
                             <h2 className='text-gray-300  p-4 font-medium '>Reply </h2>
 
                             <span className=' mr-4 bg-purple-500 rounded-full text-center p-1.5 group hover:bg-purple-100 transition-all duration-300 ease-in-out cursor-pointer'
-                                onClick={() => addCommment(tm.tweetid)}>
+                                onClick={() => addCommment(tm.tweetid, tm.userid)}>
                                 <AiOutlineSend size={20} className=" text-xl text-center flex items-center justify-center  p-0.5 text-white group-hover:text-purple-800 transition-all duration-300 ease-in-out" />
                             </span>
                         </div>
                         <div className='-mb-2 relative '>
                             <textarea className='p-6 w-full h-fit text-white  border-b border-violet-400 bg-black
-                                    focus:ring-0 focus:border-b focus:border-violet-600 focus:outline-none transition-colors duration-300 ease-in-out' placeholder='Add a comment'
-                                value={cmmt} onChange={(e) => setCmmt(e.target.value)}></textarea>
+                                focus:ring-0 focus:border-b focus:border-violet-600 focus:outline-none transition-colors duration-300 ease-in-out' placeholder='Add a comment'
+                                value={cmmt} onChange={(e) => setCmmt(e.target.value)}
+                                ref={firstItemRef}></textarea>
                         </div>
                     </div>
 
