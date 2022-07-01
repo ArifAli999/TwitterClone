@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../util/supabaseClient'
+import { useSession } from '../context'
 
-export default function Account({ session, setUserInfo, userInfo }) {
+
+import Avatar from './useraccount/Avatar'
+
+
+export default function Account({ setUserInfo, userInfo }) {
+  const { session } = useSession();
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
   const [website, setWebsite] = useState(null)
@@ -39,16 +45,15 @@ export default function Account({ session, setUserInfo, userInfo }) {
     }
   }
 
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({ avatar_url }) {
     try {
       setLoading(true)
       const user = supabase.auth.user()
 
       const updates = {
         id: user.id,
-        username,
-        website,
         avatar_url,
+        username,
         updated_at: new Date(),
       }
 
@@ -66,49 +71,19 @@ export default function Account({ session, setUserInfo, userInfo }) {
     }
   }
 
-  function handleSignOut () {
-    supabase.auth.signOut()
-    setUserInfo(null);
-  }
   return (
     <div className="form-widget">
       <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="username">Name</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="website"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div>
 
-      <div>
-        <button
-          className="button block primary"
-          onClick={() => updateProfile({ username, website, avatar_url })}
-          disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
+        <Avatar
+          url={avatar_url}
+          size={150}
+          onUpload={(url) => {
+            setAvatarUrl(url)
+            updateProfile({ avatar_url: url })
+          }}
+        />
 
-      <div>
-        <button className="button block" onClick={() => handleSignOut()}>
-          Sign Out
-        </button>
       </div>
     </div>
   )
