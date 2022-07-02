@@ -17,12 +17,11 @@ function UserBookmark() {
                 // might need too develop a new <Feed>component</Feed> because the retur array is arranged differently.
                 // Similar approach to get user likes.
                 .from('Bookmarks')
-                .select(`*, tweets(
-                 *
-                )`)
+                .select(`*, tweets(*, profiles!inner(*)))`)
                 .match({ userid: `${session.user.id}` })
                 .order('created_at', { ascending: false })
             setBookmarks(data)
+            console.log(data)
 
             if (error) {
                 throw error
@@ -69,5 +68,10 @@ function UserBookmark() {
 
     )
 }
+
+
+
+
+
 
 export default UserBookmark

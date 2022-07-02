@@ -26,19 +26,19 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
     const [reply, setReply] = useState("")
 
 
-    async function replyTweet(username, userid) {
+    async function replyTweet(tweetid, userid) {
 
         setReply(userid)
-        if (reply) {
-            setCmmt(`@${username}`)
-        }
+
+
+
 
 
 
 
     }
 
-    async function addCommment(tweetid) {
+    async function addCommment(tweetid, userid) {
 
         if (cmmt.trim().length > 0) {
 
@@ -54,12 +54,13 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
                         {
                             tweetid: tweetid, userid: x,
                             content: cmmt, created_at: formatISO(new Date()), username: username,
-                            ReplyingTo: username
+                            ReplyingTo: reply.trim().length > 0 ? reply : userid
 
                         }
                     ])
 
                 setCmmt('')
+                setReply('')
                 if (error) {
                     throw error
                 }
@@ -164,7 +165,10 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
                                             <FaUserCircle size={50} className='text-mediumgray' />
                                             <p className='text-md'>{cm.username}<br />
                                                 <span className='text-xs text-gray-300/70 leading-tight'>
-                                                    {formatDistanceToNow(new Date(cm.created_at), { addSuffix: true })}</span></p>
+                                                    {cm.replyto && `Replying to @ ${cm.replyto.username}`}
+                                                </span></p>
+                                            <p className=''></p>
+
 
 
 
@@ -172,11 +176,22 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
                                         <div className='ml-2 p-6'>
                                             {cm.content}
                                         </div>
-                                        <button className='p-2 bg-lightblack border-t border-bordergray w-full text-white'
-                                            onClick={() => {
-                                                replyTweet(cm.username, cm.userid)
-                                                firstItemRef.current.scrollIntoView()
-                                            }}>Reply</button>
+                                        <div className='flex justify-between items-center border-t border-bordergray'>
+                                            <div className='p-4'>
+                                                <span className='text-xs text-gray-300/70 leading-tight'>
+
+                                                    Posted {formatDistanceToNow(new Date(cm.created_at), { addSuffix: true })}
+                                                </span>
+                                            </div>
+                                            <div className='p-2'>
+                                                <button className='px-2.5 py-1 rounded text-base bg-lightblack border border-bordergray w-full text-white hover:border-purple-500 transition-all ease-in-out duration-500'
+                                                    onClick={() => {
+                                                        replyTweet(tm.userid, cm.userid)
+                                                        firstItemRef.current.scrollIntoView()
+                                                    }}>Reply</button>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 ))}
 

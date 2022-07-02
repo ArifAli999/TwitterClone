@@ -13,6 +13,7 @@ export default function SingleTweet({ post, id }) {
     const { session } = useSession()
     const [tweets, setTweets] = useState(null);
     const [currUser, setCurrUser] = useState(null);
+    const [replies, setReplies] = useState(null);
 
     const router = useRouter()
     if (router.isFallback) {
@@ -21,6 +22,7 @@ export default function SingleTweet({ post, id }) {
 
     useEffect(() => {
         getCurrentUser()
+
     }, [session])
 
     async function getCurrentUser() {
@@ -52,6 +54,7 @@ export default function SingleTweet({ post, id }) {
 
 
 
+
     async function getTweets() {
 
 
@@ -59,9 +62,7 @@ export default function SingleTweet({ post, id }) {
             try {
                 const { data, error } = await supabase
                     .from('tweets')
-                    .select(`*, Comments(
-                 *
-                ), profiles(*)`)
+                    .select(`*, Comments(*, user:profiles!userid(*), replyto:profiles!ReplyingTo(*)), profiles(*)`)
                     .eq('tweetid', id)
                     .order('createdAt', { ascending: false })
 

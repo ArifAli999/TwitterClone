@@ -11,9 +11,34 @@ function DropDown({ tweetid, setBookmarks, bookmarks, getAllTweets }) {
 
     const { session } = useSession()
 
+    async function deleteCmment(tweetid) {
+        try {
+            const { data, error } = await supabase
+                .from('Comments')
+                .delete()
+                .match({ tweetid: tweetid })
+
+
+
+
+
+
+
+            if (error) {
+                throw error
+            }
+            if (!error) {
+
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
 
     async function deleteTweet(tweetid) {
         try {
+            deleteCmment(tweetid)
             const { data, error } = await supabase
                 .from('tweets')
                 .delete()

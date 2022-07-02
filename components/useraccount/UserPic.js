@@ -6,6 +6,7 @@ import { useSession } from '../../context'
 import { useUser } from '../../context/user';
 import { useRouter } from 'next/router'
 import Router from 'next/router'
+import { AiOutlineClose } from 'react-icons/ai'
 
 
 function UserPic() {
@@ -105,8 +106,8 @@ function UserPic() {
     return (
         <div className='p-4 mt-2  flex w-full  justify-between items-center border-b border-bordergray'>
             <div className=''>
-                <p className='text-bold text-md text-white'>Update Bio</p>
-                <span className='font-thin text-gray-300/70 text-sm '>Tell the world about yourself</span>
+                <p className='text-bold text-md text-white'>Profile Picture</p>
+                <span className='font-thin text-gray-300/70 text-sm '>Update or remove your profile picture</span>
             </div>
 
             <div className=''>
@@ -131,7 +132,7 @@ function UserPic() {
 }
 
 
-const Modal = ({ openModal, isOpen, updateProfile, url, size, onUpload, setIsOpen }) => {
+const Modal = ({ openModal, closeModal, isOpen, updateProfile, url, size, onUpload, setIsOpen }) => {
 
     const [avatarUrl, setAvatarUrl] = useState(null)
     const [uploading, setUploading] = useState(false)
@@ -204,6 +205,8 @@ const Modal = ({ openModal, isOpen, updateProfile, url, size, onUpload, setIsOpe
                 >
                     SELECT
                 </button>
+
+
             </div>
 
             <Transition appear show={isOpen} as={Fragment}>
@@ -234,9 +237,23 @@ const Modal = ({ openModal, isOpen, updateProfile, url, size, onUpload, setIsOpe
                                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded bg-black border border-lightgray  text-left align-middle shadow-xl shadow-lightblack transition-all">
                                     <Dialog.Title
                                         as="div"
-                                        className="text-lg font-medium p-4 text-stone-300 w-full bg-black border-b border-lightgray items-center"
+                                        className="text-lg font-medium p-4 text-stone-300 w-full bg-black border-b border-lightgray items-center flex justify-between"
                                     >
-                                        BIO
+                                        <div>
+                                            Profile Picture
+                                        </div>
+
+
+                                        <div>
+                                            <button
+                                                type="button"
+                                                onClick={closeModal}
+                                                className="text-bold  border border-bordergray bg-purple-500/70 rounded-full  p-2 text-sm font-medium text-white hover:bg-opacity-70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 hover:bg-black duration-300 transition-all ease-in-out hover:text-purple-500"
+                                            >
+                                                <AiOutlineClose />
+                                            </button>
+                                        </div>
+
                                     </Dialog.Title>
 
 
@@ -244,26 +261,27 @@ const Modal = ({ openModal, isOpen, updateProfile, url, size, onUpload, setIsOpe
                                         <div className="flex text-white items-center h-full mt- w-full bg-black border-b border-bordergray p-2">
 
                                             <div className='p-4 w-full h-full'>
-                                                <div>
+                                                <div className='flex flex-col items-center'>
                                                     {avatarUrl ? (
                                                         <img
                                                             src={avatarUrl}
                                                             alt="Avatar"
-                                                            className="w-ful h-full"
+                                                            className="w-1/2 h-1/2 rounded-full"
 
                                                         />
                                                     ) : (
                                                         <img
                                                             src={avatarUrl}
                                                             alt="Avatar"
-                                                            className="w-ful h-full"
+                                                            className="w-1/2 h-1/2 rounded"
 
                                                         />
                                                     )}
-                                                    <div style={{ width: size }}>
-                                                        <label className="button primary block" htmlFor="single">
+                                                    <div className='mt-4 bg-lightblack p-2 rounded  border-bordergray border hover:border-violet-800 hover:text-violet-500 shadow-lightblack transition-all ease-in-out duration-300'>
+                                                        <label className="mt-4 cursor-pointer p-4 rounded-md" htmlFor="single">
                                                             {uploading ? 'Uploading ...' : 'Upload'}
                                                         </label>
+
                                                         <input
                                                             style={{
                                                                 visibility: 'hidden',
@@ -274,6 +292,7 @@ const Modal = ({ openModal, isOpen, updateProfile, url, size, onUpload, setIsOpe
                                                             accept="image/*"
                                                             onChange={uploadAvatar}
                                                             disabled={uploading}
+
                                                         />
                                                     </div>
                                                 </div>

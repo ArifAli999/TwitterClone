@@ -78,9 +78,8 @@ export async function getStaticProps({ params }) {
     console.log(userid)
     const { data } = await supabase
         .from('tweets')
-        .select()
+        .select('*, profiles!inner(*), Comments(*)')
         .eq('userid', userid)
-
 
 
 

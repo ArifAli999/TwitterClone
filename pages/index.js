@@ -64,7 +64,7 @@ export default function Home() {
           .select('*, profiles!inner(*), Comments(*)')
           .eq('userid', session.user.id)
 
-        console.log(data)
+
 
         if (error) {
           throw error
