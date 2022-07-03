@@ -14,10 +14,12 @@ import { format, formatDistanceToNow, set } from 'date-fns'
 import { formatISO } from 'date-fns'
 import CommentDrop from './CommentDrop'
 import { useRef } from 'react'
+import UserPictures from './UserPictures'
 
 
 
 function TweetComp({ tweets, setTweets, currUser, getTweets }) {
+    console.log(tweets)
     const firstItemRef = useRef(null);
 
     const { session } = useSession()
@@ -99,7 +101,7 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
 
                             <div className='flex p-4 items-center justify-between  gap-4 border-b border-bordergray w-full'>
                                 <div className='flex gap-4 items-center p-1.5'>
-                                    <FaUserCircle size={50} className='text-mediumgray' />
+                                    {tm.profiles && tm.profiles.avatar_url ? <UserPictures imgUrl={tm.profiles.avatar_url} /> : <FaUserCircle size={50} className='text-mediumgray' />}
                                     <div className='text-xl cursor-pointer mb-1 hover:text-purple-400 transition-all duration-300 ease-linear font-semibold text-stone-100 '>
                                         <Link href={`/profiles/${tm.userid}`}>
                                             <p className='leading-loose'>{tm.username}</p>
@@ -162,7 +164,8 @@ function TweetComp({ tweets, setTweets, currUser, getTweets }) {
                                         </div>
 
                                         <div className='border-b p-4 border-bordergray flex items-center gap-2 mb-0 bg-lightblack/80'>
-                                            <FaUserCircle size={50} className='text-mediumgray' />
+                                            {cm.user && cm.user.avatar_url ? <UserPictures imgUrl={cm.user.avatar_url} /> : <FaUserCircle size={50} className='text-mediumgray' />}
+
                                             <p className='text-md'>{cm.username}<br />
                                                 <span className='text-xs text-gray-300/70 leading-tight'>
                                                     {cm.replyto && `Replying to @ ${cm.replyto.username}`}

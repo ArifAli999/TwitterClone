@@ -19,6 +19,8 @@ import { useUser } from '../context/user'
 function UserFeed({ tweets, setTweets, getAllTweets }) {
 
 
+
+    console.log(tweets)
     const { session } = useSession()
     const { user } = useUser()
 
@@ -69,7 +71,7 @@ function UserFeed({ tweets, setTweets, getAllTweets }) {
                                 </div>
                             </div>
 
-                            {session && session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} getAllTweets={getAllTweets} /> : < SmallDropDown tweetid={tm.tweetid} />}
+                            {session && session.user.id == tm.userid ? <DropDown tweetid={tm.tweetid} getAllTweets={getAllTweets} /> : < SmallDropDown tweetid={tm.tweetid} getAllTweets={getAllTweets} />}
 
 
 
@@ -135,7 +137,7 @@ function UserFeed({ tweets, setTweets, getAllTweets }) {
 
 const UserPic = ({ imgUrl }) => {
     const [data, setData] = useState();
-    console.log(data)
+
     //use effect to fetch on mount
 
     async function getImages(url) {

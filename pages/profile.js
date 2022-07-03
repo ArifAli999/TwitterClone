@@ -57,7 +57,10 @@ function UserProfilePage() {
 
                 const { data, error } = await supabase
                     .from('tweets')
-                    .select()
+                    .select(`*, Comments(
+                 *
+                ), profiles(*)`)
+
                     .eq('userid', `${session.user.id}`)
 
                 setUserTweets(data)

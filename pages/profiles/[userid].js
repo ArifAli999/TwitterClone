@@ -5,9 +5,10 @@ import { useSession } from '../../context/index'
 import { useState, useEffect } from 'react'
 
 
-export default function Post({ post, id }) {
+export default function Post({ id }) {
     const { session } = useSession()
     const [user, setUser] = useState(null);
+    const [data, setData] = useState(null)
 
     const router = useRouter()
     if (router.isFallback) {
@@ -16,9 +17,37 @@ export default function Post({ post, id }) {
 
     useEffect(() => {
         getCurrentUser()
+        getAllTweets()
     }, [session])
 
-    console.log(user)
+
+    async function getAllTweets() {
+        try {
+            const { data, error } = await supabase
+                .from('tweets')
+                .select(`*, Comments(
+                 *
+                ), profiles(*)`)
+                .eq('userid', id)
+                .order('createdAt', { ascending: false })
+
+
+
+            console.log(data)
+            setData(data)
+
+
+            if (error) {
+                throw error
+            }
+        } catch (error) {
+            alert(error.message)
+        } finally {
+
+        }
+    }
+
+
     async function getCurrentUser() {
 
         if (session) {
@@ -56,7 +85,7 @@ export default function Post({ post, id }) {
 
 
             <div className='p-6'>
-                <UserFeed tweets={post} session={session} />
+                <UserFeed tweets={data} session={session} getAllTweets={getAllTweets} />
             </div>
         </div>
     )
@@ -75,18 +104,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
     const { userid } = params
-    console.log(userid)
-    const { data } = await supabase
-        .from('tweets')
-        .select('*, profiles!inner(*), Comments(*)')
-        .eq('userid', userid)
 
 
 
 
     return {
         props: {
-            post: data,
+
             id: userid
 
         }

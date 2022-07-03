@@ -35,10 +35,36 @@ function DropDown({ tweetid, setBookmarks, bookmarks, getAllTweets }) {
         }
     }
 
+    async function deleteBookmarks(tweetid) {
+        try {
+            const { data, error } = await supabase
+                .from('Bookmarks')
+                .delete()
+                .match({ tweetid: tweetid })
+
+
+
+
+
+
+
+            if (error) {
+                throw error
+            }
+            if (!error) {
+
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+    }
+
 
     async function deleteTweet(tweetid) {
+        deleteBookmarks(tweetid) && deleteCmment(tweetid)
+
         try {
-            deleteCmment(tweetid)
+
             const { data, error } = await supabase
                 .from('tweets')
                 .delete()
@@ -140,7 +166,11 @@ function DropDown({ tweetid, setBookmarks, bookmarks, getAllTweets }) {
                                     <button
                                         className='hover:bg-darkgray transition-all duration-300 ease-linear text-white rounded-none border-b border-darkgray
                                         group flex w-full items-center px-2 py-2 text-sm gap-2'
-                                        onClick={() => deleteTweet(tweetid)}
+                                        onClick={() => {
+                                            deleteBookmarks(tweetid)
+                                            deleteCmment(tweetid)
+                                            deleteTweet(tweetid)
+                                        }}
                                     >
                                         <BsTrash2
                                             className="mr-2  text-purple-white group-hover:text-pink-500 transition-all duration-300 ease-in-out"

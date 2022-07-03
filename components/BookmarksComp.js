@@ -11,6 +11,7 @@ import { useSession } from '../context'
 import SmallDropDown from './SmallDropDown'
 import BookMarkDrop from './BookMarkDrop'
 import Link from 'next/link'
+import UserPictures from './UserPictures'
 
 function BookmarksComp({ bookmarks, setBookmarks, getAllTweets }) {
     const { session } = useSession()
@@ -24,7 +25,7 @@ function BookmarksComp({ bookmarks, setBookmarks, getAllTweets }) {
 
                         <div className='flex p-4 items-center justify-between  gap-4 border-b border-bordergray w-full'>
                             <div className='flex gap-4 items-center p-1.5'>
-                                {tm.tweets.profiles && tm.tweets.profiles.avatar_url ? <UserPic imgUrl={tm.tweets.profiles.avatar_url} /> : <FaUserCircle size={50} className='text-mediumgray' />}
+                                {tm.tweets.profiles && tm.tweets.profiles.avatar_url ? <UserPictures imgUrl={tm.tweets.profiles.avatar_url} /> : <FaUserCircle size={50} className='text-mediumgray' />}
 
                                 <div className='text-xl cursor-pointer mb-1 hover:text-purple-400 transition-all duration-300 ease-linear font-semibold text-stone-100 '>
                                     <p className='leading-loose'>{tm.tweets.username}</p><p className='text-xs font-thin text-gray-300/70 leading-tight'>{tm.tweets.createdAt}</p>
@@ -70,45 +71,5 @@ function BookmarksComp({ bookmarks, setBookmarks, getAllTweets }) {
     )
 }
 
-const UserPic = ({ imgUrl }) => {
-    const [data, setData] = useState();
-    console.log(data)
-    //use effect to fetch on mount
-
-    async function getImages(url) {
-
-        try {
-            const { data, error } = await supabase.storage.from('avatars').createSignedUrl(url, 60000000)
-            if (error) {
-                throw error
-            }
-            if (data) {
-                setData(data.signedURL)
-            }
-
-        } catch (error) {
-            console.log('Error downloading image: ', error.message)
-        }
-        finally {
-
-        }
-
-
-
-    }
-    useEffect(() => {
-
-        getImages(imgUrl)
-
-    }, [])
-
-    if (data === undefined) return <p>nooo</p> //you can return some loader here
-
-
-    return (
-        <div className='w-14 h-14'>
-            <img src={data} className=" object-cover align-middle max-w-full h-full rounded-full border border-bordergray" />
-        </div>)
-}
 
 export default BookmarksComp
