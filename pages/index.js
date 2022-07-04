@@ -65,9 +65,7 @@ export default function Home() {
 
   return (
     <div className="w-full h-full   ">
-      {isFetching ? (
-        <LoadingSpinnner />
-      ) : (!session ? <Auth /> :
+      {!session ? <Auth /> :
         (
 
 
@@ -100,7 +98,7 @@ export default function Home() {
 
         )
 
-      )}
+      }
 
 
 
