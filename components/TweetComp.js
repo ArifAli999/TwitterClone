@@ -19,7 +19,7 @@ import UserPictures from './UserPictures'
 
 
 function TweetComp({ tweets, setTweets, currUser, getTweets }) {
-    console.log(tweets)
+
     const firstItemRef = useRef(null);
 
     const { session } = useSession()

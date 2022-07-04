@@ -5,6 +5,7 @@ import { useSession } from '../../context/index'
 import { useState, useEffect } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 import TweetComp from '../../components/TweetComp'
+import { useQuery } from 'react-query'
 
 
 export default function SingleTweet({ post, id }) {
@@ -14,6 +15,9 @@ export default function SingleTweet({ post, id }) {
     const [tweets, setTweets] = useState(null);
     const [currUser, setCurrUser] = useState(null);
     const [replies, setReplies] = useState(null);
+
+    const qr = useQuery('tweet', getTweets)
+
 
     const router = useRouter()
     if (router.isFallback) {
@@ -26,15 +30,12 @@ export default function SingleTweet({ post, id }) {
     }, [session])
 
     async function getCurrentUser() {
-
         if (session) {
             try {
                 const { data, error } = await supabase
                     .from('profiles')
                     .select()
                     .eq('id', session.user.id)
-
-
                 setCurrUser(data)
                 console.log(data)
 
@@ -48,8 +49,6 @@ export default function SingleTweet({ post, id }) {
             }
 
         }
-
-
     }
 
 
@@ -68,12 +67,11 @@ export default function SingleTweet({ post, id }) {
 
 
                 setTweets(data)
-                console.log(data)
-
 
                 if (error) {
                     throw error
                 }
+                return data
             } catch (error) {
                 alert(error.message)
             } finally {
@@ -106,7 +104,7 @@ export default function SingleTweet({ post, id }) {
 
 
             <div className='md:p-6 mt-4'>
-                <TweetComp tweets={tweets} session={session} currUser={currUser} getTweets={getTweets} />
+                <TweetComp tweets={qr.data} session={session} currUser={currUser} getTweets={getTweets} />
             </div>
         </div>
     )

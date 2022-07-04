@@ -8,6 +8,9 @@ import TrendingComp from '../components/Trending'
 import TrendingPost from '../components/TrendingPost'
 import { useSession } from '../context'
 import { useUser } from '../context/user'
+import { useQuery } from 'react-query'
+import { useIsFetching } from 'react-query'
+import LoadingSpinnner from '../components/Spinner'
 
 
 
@@ -17,16 +20,18 @@ export default function Home() {
 
   const { session } = useSession()
   const { user } = useUser()
-
-
   const [currUser, setCurrUser] = useState(null);
   const [tweets, setTweets] = useState([]);
 
+  const isFetching = useIsFetching()
 
-  useEffect(() => {
-    getCurrentUser();
-    getAllTweets()
-  }, [session])
+
+
+  const qr = useQuery('tweets', getAllTweets)
+
+
+
+
 
 
   async function getAllTweets() {
@@ -37,15 +42,10 @@ export default function Home() {
                  *
                 ), profiles(*)`)
         .order('createdAt', { ascending: false })
-
-
-
-      setTweets(data);
-
-
       if (error) {
         throw error
       }
+      return data
     } catch (error) {
       alert(error.message)
     } finally {
@@ -55,28 +55,7 @@ export default function Home() {
 
 
 
-  async function getCurrentUser() {
-    if (session) {
-      try {
 
-        const { data, error } = await supabase
-          .from('tweets')
-          .select('*, profiles!inner(*), Comments(*)')
-          .eq('userid', session.user.id)
-
-
-
-        if (error) {
-          throw error
-        }
-      } catch (error) {
-        alert(error.message)
-      } finally {
-
-      }
-
-    }
-  }
 
 
 
@@ -86,11 +65,10 @@ export default function Home() {
 
   return (
     <div className="w-full h-full   ">
-
-
-      {!session ? <Auth /> :
+      {isFetching ? (
+        <LoadingSpinnner />
+      ) : (!session ? <Auth /> :
         (
-
 
 
 
@@ -98,10 +76,10 @@ export default function Home() {
 
           <div className='flex '>
             <div className='mt-4 p-4 md:p-4 mb-10 overflow-hidden flex-1 '>
-              <SubmitPost session={session} setTweets={setTweets} getAllTweets={getAllTweets} />
+              <SubmitPost session={session} />
               <div className='mt-10    '>
 
-                <UserFeed tweets={tweets} setTweets={setTweets} getAllTweets={getAllTweets} />
+                <UserFeed tweets={qr.data} />
 
 
 
@@ -122,7 +100,10 @@ export default function Home() {
 
         )
 
-      }
+      )}
+
+
+
     </div>
   )
 }

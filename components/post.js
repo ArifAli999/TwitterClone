@@ -10,7 +10,7 @@ import { useUser } from '../context/user';
 import React from 'react'
 import { AiOutlineConsoleSql } from 'react-icons/ai';
 
-function SubmitPost({ session, tweets, getAllTweets }) {
+function SubmitPost({ session }) {
   const [tweet, setTweet] = useState(''); // state for tweet input.
   const [userTweets, setUserTweets] = useState(); // store user tweets
 
@@ -40,7 +40,7 @@ function SubmitPost({ session, tweets, getAllTweets }) {
             }
           ])
 
-        console.log(tweet.trim().length)
+
 
         setTweet('')
         if (error) {
@@ -49,7 +49,7 @@ function SubmitPost({ session, tweets, getAllTweets }) {
       } catch (error) {
         alert(error.message)
       } finally {
-        getAllTweets();
+
         alert('added')
       }
 

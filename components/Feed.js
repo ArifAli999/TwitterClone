@@ -20,7 +20,7 @@ function UserFeed({ tweets, setTweets, getAllTweets }) {
 
 
 
-    console.log(tweets)
+
     const { session } = useSession()
     const { user } = useUser()
 
