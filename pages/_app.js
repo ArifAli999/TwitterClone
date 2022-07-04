@@ -15,14 +15,15 @@ import {
   QueryClientProvider,
 } from 'react-query'
 
-const queryClient = new QueryClient()
 
-queryClient.invalidateQueries('tweets')
+
 
 
 export default function MyApp({ Component, pageProps: { session, ...pageProps },
 }) {
 
+  const queryClient = new QueryClient()
+  queryClient.invalidateQueries()
 
 
 

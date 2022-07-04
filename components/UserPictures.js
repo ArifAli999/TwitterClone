@@ -5,6 +5,7 @@ import { supabase } from '../util/supabaseClient'
 function UserPictures({ imgUrl }) {
     const [data, setData] = useState();
 
+
     //use effect to fetch on mount
 
     async function getImages(url) {
